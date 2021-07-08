@@ -19,13 +19,13 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <!-- 管理员 -->         
-                    <li><a href="">用户管理</a></li>
-                    <li><a href="">（网站维护）</a></li>
+                    <li><a href="" target="mainFrame">用户管理</a></li>
+                    <li><a href="" target="mainFrame">（网站维护）</a></li>
                     <!-- 普通用户 -->
-                    <li><a href="">个人信息</a></li>
-                    <li><a href="">收支管理</a></li>
-                    <li><a href="">（投资管理）</a></li>
-                    <li><a href="">意见反馈</a></li> 
+                    <li><a href="" target="mainFrame">个人信息</a></li>
+                    <li><a href="" target="mainFrame">收支管理</a></li>
+                    <li><a href="" target="mainFrame">（投资管理）</a></li>
+                    <li><a href="" target="mainFrame">意见反馈</a></li> 
                                            
                     
                 </ul>
