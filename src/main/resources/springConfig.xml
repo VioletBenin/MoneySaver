@@ -13,7 +13,9 @@
                            http://www.springframework.org/schema/tx
                            http://www.springframework.org/schema/tx/spring-tx.xsd">
 	
-	<context:component-scan base-package="com.moneysaver"></context:component-scan>
+	<context:component-scan base-package="com.moneysaver">
+	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 	
 	<!-- 1、数据库配置文件 -->
 	<context:property-placeholder location="classpath:db.properties"/>
@@ -34,15 +36,36 @@
 	<!-- 4、配置@Transactional注解的事务 --> 
 	<tx:annotation-driven transaction-manager="txman" />
 	
-	<!-- 5、配置Mybatis的SqlSessionFactory -->	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="ds"></property>
-	</bean>
-	
-	<!-- 6、配置MapperScannerConfigurer
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.moneysaver.dao"></property>
-	</bean>
-	 -->
+	        <!-- 实例化sqlSessionFactory时需要使用上述配置好的数据源以及SQL映射文件 -->
+	        <property name="dataSource" ref="ds" />
+	        <property name="configuration">
+	            <bean class="org.apache.ibatis.session.Configuration">
+	                <property name="mapUnderscoreToCamelCase" value="true" />
+	                <property name="useGeneratedKeys" value="true" />
+	            </bean>
+	        </property>
+	        <property name="plugins">
+        <array>
+            <bean class="com.github.pagehelper.PageInterceptor">
+                <property name="properties">
+                    <value>
+                        params=value1
+                    </value>
+                </property>
+            </bean>
+        </array>
+    </property>
+	        <!-- <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property> -->   
+	         <property name="typeAliasesPackage" value="com.moneysaver.bean" />  
+	        <property name="mapperLocations" value="classpath:com/moneysaver/mapper/*.xml" />
+	    </bean>
+    
+	    <!-- 配置扫描器 -->
+	    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	        <!-- 扫描cn.edu.uestc.ssm.dao这个包以及它的子包下的所有映射接口类 -->
+	        <property name="basePackage" value="com.moneysaver.dao" />
+	        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	    </bean>
 	
 </beans>

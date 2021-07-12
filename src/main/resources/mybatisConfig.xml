@@ -2,7 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "mybatis-3-config.dtd" >
 <configuration>
 	<mappers>
-	<mapper resource="com/moneysaver/mybatis/IncomeMapper.xml">
+	
+	<mapper resource="com/moneysaver/mapper/UserMapping.xml">
 	</mapper>
+	
 	</mappers>
 </configuration>

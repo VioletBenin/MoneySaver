@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.moneysaver.dao.UserMapping">
+<!-- 查询所有用户 -->
+<select id="selectUser" resultType="com.moneysaver.bean.User">
+select * from user 
+</select>
+
+<!-- 删除单个用户 -->
+<delete id="deleteuser" parameterType="int">
+delete from user where id=#{id}
+</delete>
+
+<!--修改用户密码 -->
+<update id="updatepwd" parameterType="com.moneysaver.bean.User">
+update user set 
+<if test="password!=null">
+password="000000"
+</if>
+where id=#{id}
+</update>
+
+<!-- 修改用户类型 -->
+<update id="updatetype" parameterType="int">
+update user set 
+<if test="usertype!=null">
+usertype=#{usertype}
+</if>
+where id=#{id}
+</update>
+
+<!-- 添加用户 -->
+<insert id="insertuser"  parameterType="com.moneysaver.bean.User">
+insert into user values (null,#{name},#{password},#{telephone},#{sex},#{age},#{birthday},#{province},#{city},#{money},#{usertype})
+</insert>
+
+<!-- 模糊查询用户 -->
+ <select id="selectpartuser" resultType="com.moneysaver.bean.User" parameterType="com.moneysaver.bean.User">
+    select * from user 
+    <where>
+    	<if test="name!=null || name !=''">
+    		name like CONCAT('%',CONCAT(#{name},'%')) 
+    	</if>
+    	<if test="pwd!=null|| pwd !=''">
+    		telephone like"%#{pwd}%"  
+    	</if>
+    	<if test="sex!=null || sex !=''">
+    		sex like CONCAT('%',CONCAT(#{sex},'%'))
+    	</if>
+    	<if test="age!=null|| age !=''">
+    		age like CONCAT('%',CONCAT(#{age},'%'))
+    	</if>        	
+    	<if test="province!=null|| province !=''">
+    		province like CONCAT('%',CONCAT(#{province},'%'))
+    	</if>
+    	<if test="usertype!=null|| usertype !=''">
+    		usertype like CONCAT('%',CONCAT(#{usertype},'%')) 
+    	</if>
+    </where>
+  </select> 
+ 
+  <!-- 验证手机号唯一性
+<select id="checktelephone" parameterType="String" resultType="com.moneysaver.bean.User">
+select * from user where telephone= #{telephone}
+</select>
+ -->
+ 
+</mapper>
