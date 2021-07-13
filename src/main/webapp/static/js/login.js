@@ -1,38 +1,9 @@
-var json; //for object store login data in json
-
-function getJSONfromLocalhost(result) {
-    json = result['loginInfo'];
-}
-
-console.log(verVal) //为了输入方便
-
-
+// 判断是否为空
 function isNull(str) {
     return str == ""
 }
 
-function check(sIndentity, sPassword, json) {
-    var Found; //找到标记
-    for (var i = 0; i < json.length; i++) { //全部用户数据遍历
-        if (json[i]["password"] == sPassword) //比对password
-        {
-            Found = false;
-            var maybe = json[i];
-            for (var key in maybe["identity"][0]) { //key
-                if (maybe["identity"][0][key] == sIndentity) {
-                    alert("欢迎用户" + maybe["identity"][0]["name"] + "通过" + key + "登录!")
-                    Found = true;
-                    break;
-                }
-            }
-            if (Found)
-                break;
-        }
-    }
-    if (!Found)
-        alert("ID或密码错误，请核对或改为用户名/邮箱/手机号登陆")
-}
-
+// 检查是否为空
 function checkElem0(strId) {
     var elem = $('#' + strId)[0];
     $(elem).focus(
@@ -49,6 +20,9 @@ function checkElem0(strId) {
         })
 } //before submit
 
+
+
+
 function checkElem(strId) {
     var elem = $('#' + strId)[0];
     var ans = isNull(elem.value) //是空的吗
@@ -59,12 +33,45 @@ function checkElem(strId) {
     return !ans;
 } //submit check
 
+
+
+
 $(
     function() {
-        checkElem0('name')
+        checkElem0('tele')
         checkElem0('password')
     }
 )
+
+// 表单提交请求验证
+function validate() {
+    if (document.getElementById("userLogname").value == "") {
+        alert("用户登录名不能为空！");
+        document.getElementById("userLogname").focus();
+        return false;
+    }
+    if (document.getElementById("userPwd").value == "") {
+        alert("登录密码不能为空！");
+        document.getElementById("userPwd").focus();
+        return false;
+    }
+    if (document.getElementById("validateCode").value == "") {
+        alert("验证码不能为空！");
+        document.getElementById("validateCode").focus();
+        return false;
+    }
+    return true;
+}
+
+function changeValidateCode() {
+    document.getElementById("validateCode").src =
+        "ValidateCodeServlet?rand=" + Math.random();
+}
+
+
+// $(alert())
+
+
 
 function checkAll() {
     var verifycode = $('#verifital_input')[0].value;
@@ -82,3 +89,25 @@ function checkAll() {
         } else alert("ID和密码都要填写！")
     }
 }
+
+
+
+
+
+$("input[type='text']").blur(function() {
+    if ($(this).val() == '') {
+        $("#pop1 strong").html("用户名不能为空");
+        $("#pop1").removeClass("hidden");
+    } else {
+        $("#pop1").addClass("hidden");
+    }
+});
+
+$("input[type='password']").blur(function() {
+    if ($(this).val() == '') {
+        $("#pop2 strong").html("密码不能为空");
+        $("#pop2").removeClass("hidden");
+    } else {
+        $("#pop2").addClass("hidden");
+    }
+});

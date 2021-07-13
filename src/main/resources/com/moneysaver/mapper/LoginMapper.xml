@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.moneysaver.dao.UserMapping">
+
+
+<!-- 注册 -->
+<insert id="checkRegister"  parameterType="com.moneysaver.bean.User">
+insert into user (password,telephone) values (#{password},#{telephone})
+where telephone=#{telephone}
+</insert>
+
+
+<!-- 登录：查询用户密码 -->
+<select id="selectUserPassword" resultType="com.moneysaver.bean.User">
+select password from user where telephone=#{telephone}
+</select>
+
+<!--更新密码：修改用户密码 -->
+<update id="updatePwdByTele" parameterType="com.moneysaver.bean.User">
+update user set 
+<if test="password!=null">
+password=#{password}
+</if>
+where telephone=#{telephone}
+</update>
+
+<!-- 更新信息 -->
+<insert id="updateUserInfo"  parameterType="com.moneysaver.bean.User">
+insert into user (name,sex,age,birthday,province,city,money) 
+values(#{name},#{sex},#{age},#{birthday},#{province},#{city},#{money})
+where telephone=#{telephone}
+</insert>
+  
+</mapper>
+
+
+ 
